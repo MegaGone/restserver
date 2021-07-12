@@ -43,8 +43,8 @@ const login = async (req = request, res = response) => {
 
 
   } catch (e) {
+    console.log(e);
     return res.status(500).json({
-      e,
       msg: "Something has gone wrong, try again later",
     });
   }

@@ -22,10 +22,11 @@ const createUser = async (req, res = response) => {
 const getUsers = async (req, res = response) => {
 
   const { limit = 5, from = 0 } = req.query;
+  const query = { enabled: true };
 
   const [ total, users ] = await Promise.all([
-    User.countDocuments({ enabled: true }),
-    User.find({ enabled: true }).skip(parseInt(from)).limit(parseInt(limit))
+    User.countDocuments(query),
+    User.find(query).skip(Number(from)).limit(Number(limit))
   ])
 
   res.json({

@@ -5,7 +5,10 @@ const { check } = require('express-validator');
 const { validRole, emailExist, verifyUserById } = require('../helpers/db-validators')
 
 // Middlewares
-const { validateFields, validateJWT, validateRole, haveRoles } = require('../middlewares/index');
+// const { validateFields, validateJWT, validateRole, haveRoles } = require('../middlewares/index');
+const { validateFields } = require('../middlewares/validate-fields');
+const { validateJWT } = require('../middlewares/validate-jwt');
+const { validateRole, haveRoles } = require('../middlewares/validate-roles');
 
 // Controllers
 const controller = require('../controllers/user');
@@ -26,6 +29,7 @@ controller.updateUsers );
 router.post('/', 
 [
     check('name',  'Name required').not().isEmpty(),
+    check('email', 'The email its invalid').isEmail(),
     check('email').custom( emailExist ),
     check('password', 'Password must at least 6 characters').isLength({min: 6}), 
     check('role').custom( validRole ),
