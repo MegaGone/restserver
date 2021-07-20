@@ -8,7 +8,7 @@ const { verifyCategoryById } = require('../helpers/db-validators');
 const controller = require('../controllers/categories');
 
 // Middlewares
-const { validateFields, validateJWT } = require('../middlewares')
+const { validateFields, validateJWT, haveRoles } = require('../middlewares')
 
 const router = Router();
 
@@ -30,8 +30,24 @@ router.get('/:id',
 ],
 controller.getCategoryById);
 
-router.put('/:id', controller.updateCategory);
+router.put('/:id', 
+[
+    validateJWT,
+    check('id', 'Invalid ID').isMongoId(),
+    check('id').custom( verifyCategoryById ),
+    check('name', 'You need provide a name to update the category.').not().isEmpty(),
+    validateFields
+]
+,controller.updateCategory);
 
-router.delete('/:id', controller.deleteCategory);
+router.delete('/:id', 
+[
+    validateJWT,
+    haveRoles('ADMIN_ROLE'),
+    check('id', 'Invalid ID').isMongoId(),
+    check('id').custom( verifyCategoryById ),
+    validateFields
+]
+,controller.deleteCategory);
 
 module.exports = router;

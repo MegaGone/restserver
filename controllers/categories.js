@@ -58,12 +58,26 @@ const createCategory = async (req = request, res = response) => {
 
 // User - valid token
 const updateCategory = async (req = request, res = response) => {
-  res.send("UPDATE");
+
+  const { id } = req.params;
+  
+  const name = req.body.name.toUpperCase();
+
+  const categoryDB = await Category.findByIdAndUpdate(id, { name });
+
+  return res.status(200).json({ categoryDB });
+
 };
 
 // Admin
 const deleteCategory = async (req = request, res = response) => {
-  res.send("DELETE");
+  
+  const { id } = req.params;
+
+  const categoryDB = await Category.findByIdAndUpdate(id, { enabled: false });
+
+  return res.status(200).json({ categoryDB })
+
 };
 
 module.exports = {
