@@ -5,10 +5,7 @@ const { check } = require('express-validator');
 const { validRole, emailExist, verifyUserById } = require('../helpers/db-validators')
 
 // Middlewares
-// const { validateFields, validateJWT, validateRole, haveRoles } = require('../middlewares/index');
-const { validateFields } = require('../middlewares/validate-fields');
-const { validateJWT } = require('../middlewares/validate-jwt');
-const { validateRole, haveRoles } = require('../middlewares/validate-roles');
+const { validateFields, validateJWT, validateRole, haveRoles } = require('../middlewares');
 
 // Controllers
 const controller = require('../controllers/user');
