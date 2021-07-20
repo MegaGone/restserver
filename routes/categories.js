@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 // Helpers 
-const { verifyCategoryById } = require('../helpers/db-validators');
+const { verifyCategoryById, verifyCategory } = require('../helpers/db-validators');
 
 // Controller
 const controller = require('../controllers/categories');
@@ -36,6 +36,7 @@ router.put('/:id',
     check('id', 'Invalid ID').isMongoId(),
     check('id').custom( verifyCategoryById ),
     check('name', 'You need provide a name to update the category.').not().isEmpty(),
+    check('name').custom( verifyCategory ),
     validateFields
 ]
 ,controller.updateCategory);

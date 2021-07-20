@@ -33,9 +33,18 @@ const verifyCategoryById = async id => {
   }
 };
 
+const verifyCategory = async (name = "") => {
+  const nameDB = await Category.findOne({ name });
+
+  if (nameDB) {
+    throw new Error(`ERROR: ${name} as already in use.`);
+  }
+};
+
 module.exports = {
   validRole,
   emailExist,
   verifyUserById,
-  verifyCategoryById
+  verifyCategoryById,
+  verifyCategory
 };
