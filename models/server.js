@@ -8,9 +8,10 @@ class Server {
     this.port = process.env.PORT;
 
     this.paths = {
-      users:      '/api/users',
+      auth:       '/api/auth',
       categories: '/api/categories',
-      auth:       '/api/auth'
+      products:   '/api/products',
+      users:      '/api/users',
     }
 
     // BD Connection
@@ -39,8 +40,9 @@ class Server {
   }
 
   routes() {
-    this.app.use( this.paths.auth , require('../routes/auth') )
-    this.app.use( this.paths.categories , require('../routes/categories'))
+    this.app.use( this.paths.auth , require('../routes/auth') );
+    this.app.use( this.paths.categories , require('../routes/categories'));
+    this.app.use( this.paths.products, require('../routes/products'));
     this.app.use( this.paths.users , require("../routes/user"));
   }
 

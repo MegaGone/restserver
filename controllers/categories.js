@@ -1,5 +1,4 @@
 const { request, response } = require("express");
-const { verifyCategory } = require("../helpers/db-validators");
 const { Category } = require("../models");
 
 // Public User
