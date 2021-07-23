@@ -42,13 +42,29 @@ const verifyCategory = async (name = "") => {
 };
 
 const existCategory = async (name = "") => {
-  
   const productDB = await Product.findOne({ name });
 
   if (!productDB) {
-    throw new Error(`ERROR: ${name} category dont exist.`)
+    throw new Error(`ERROR: ${name} category dont exist.`);
   }
-  
+};
+
+const verifyProductById = async id => {
+  const product = await Product.findById(id);
+
+  if (!product) {
+    throw new Error(`ERROR: ID ${id} dont exist`)
+  }
+};
+
+const verifyProduct = async ( name = "" ) => {
+
+  const product = await Product.findOne({ name });
+
+  if (product) {
+    throw new Error(`ERROR: ${name} product already exist`)
+  }
+
 }
 
 module.exports = {
@@ -57,5 +73,7 @@ module.exports = {
   verifyUserById,
   verifyCategoryById,
   verifyCategory,
-  existCategory
+  existCategory,
+  verifyProductById,
+  verifyProduct
 };
